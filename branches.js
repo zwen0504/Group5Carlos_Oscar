@@ -41,17 +41,33 @@ class Circles {
     const numBranches = 4;
     const angleOffsets = [-PI/6, -PI/3, -TWO_PI/3, -(5*PI)/6]; // Direction spread
 
-    const seasonColors = [
-      [color(120, 255, 120), color(80, 200, 80)], // Spring (light green)
-      [color(255, 230, 100), color(255, 180, 60)],  // Summer (yellow/gold)
-      [color(255, 100, 0), color(150, 30, 0)],   // Autumn (orange)
-      [color(120, 180, 255), color(60, 120, 200)]  // Winter (icy blue)
-    ];
+    let seasonColors 
+    
+    if (useCherryBlossom){
+     seasonColors = [
+      [color(255, 182, 193), color(255, 105, 180)], //pink
+      [color(255, 182, 193), color(255, 105, 180)],
+      [color(255, 182, 193), color(255, 105, 180)],
+      [color(255, 182, 193), color(255, 105, 180)]
+      ];
+      } else {
+      seasonColors = [
+      [color(120, 255, 120), color(80, 200, 80)], // Spring 
+      [color(255, 230, 100), color(255, 180, 60)],  // Summer 
+      [color(255, 100, 0), color(150, 30, 0)],   // Autumn 
+      [color(120, 180, 255), color(60, 120, 200)]  // Winter 
+      ]
+      }
 
     for (let i = 0; i < numBranches; i++) {
-      this.growBranch(start.ballXPos, start.ballYPos, 6, angleOffsets[i], seasonColors[i]);
+        this.growBranch(start.ballXPos, start.ballYPos, 6, angleOffsets[i], seasonColors[i]);
+      }
     }
-  }
+
+  
+    
+  
+  
 
   growBranch(x, y, segments, angle, colorPair) {
 
@@ -81,7 +97,6 @@ class Circles {
       prevD = newD;
     }
   }
-
 
   display(){  
 

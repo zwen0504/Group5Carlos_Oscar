@@ -2,19 +2,20 @@ let img;
 let palette = [];
 let borderColor;
 let columnWidths = [];
-let balls = []
-
+let mic;
+let useCherryBlossom = false
 
 function preload() {
   img = loadImage('Assets/Anwar Jalal Shemza Apple Tree.jpeg'); 
 }
 
 function setup() {
-  let trunk = new Circles(img.width/2, img.height - img.height/5.5, 50)
+  /*let trunk = new Circles(img.width/2, img.height - img.height/5.5, 50)
   trunk.generateTrunk()
   trunk.generateBranches()
   trunk.growBranch()
-
+  */
+  
   createCanvas(img.width, img.height);
   extractBackgroundPalette();
 
@@ -26,13 +27,37 @@ function setup() {
   addTexture();
   addScratches();
   drawBase()
+  generateTree()
+}
+
+function generateTree(){
+  balls = [];
+  let tree = new Circles(img.width/2, img.height - img.height/5.5, 50);
+  tree.generateTrunk();
+  tree.generateBranches()
+  tree.growBranch()
 }
 
 function draw() {
   for (let ball of balls) {
-    ball.display();
+    ball.display()
     }
+}
 
+function regenerateTree() {
+  balls = [];
+  let base = new Circles(width / 2, height - 50, 80);
+  base.generateTrunk();
+  base.generateBranches();
+}
+
+
+function keyPressed() {
+  if (key == 'c'){
+    useCherryBlossom = !useCherryBlossom;
+    regenerateTree()
+
+  }
 }
 
 //Randomly sample the entire image
@@ -196,3 +221,24 @@ function addScratches() {
     line(x1, y1, x2, y2);
   }
 }
+
+
+/* 
+function keyPressed() {
+  if (key == 'w'){
+    setSeasonColors('winter')
+  }
+  if (key == 's') {
+    setSeasonColors('spring')
+  }
+  if (key == 'a') {
+    setSeasonColors('autumn')
+  };
+  if (key == 'f') {
+     setSeasonColors('summer')
+  };
+  if (key == 'c') {
+    setSeasonColors('cherry')
+  }; // secret blossom
+}
+*/
