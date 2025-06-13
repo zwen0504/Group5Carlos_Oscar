@@ -11,7 +11,7 @@ class Circles {
     this.originalY = starterYPos
   
     //for dropping animation
-    this.targetY = height - 80 //base level of drawing
+    this.targetY = img.height - img.height/5.5 //base level of drawing
     this.dropSpeed = 0
     this.gravity = 0.3
 
@@ -72,11 +72,6 @@ class Circles {
         this.growBranch(start.ballXPos, start.ballYPos, 6, angleOffsets[i], seasonColors[i]);
       }
     }
-
-  
-    
-  
-  
 
   growBranch(x, y, segments, angle, colorPair) {
 
@@ -161,12 +156,12 @@ class Circles {
     if (this.ballYPos < this.targetY){
       this.ballYPos += this.dropSpeed
       //random horizontal movement for natural falling feel
-      this.ballXPos += random(-5, 5)
+      this.ballXPos += random(-10, 10)
 
       //slight bounce when hitting base level
       if (this.ballYPos >= this.targetY) {
         this.ballYPos = this.targetY
-        this.dropSpeed *= -0.3
+        this.dropSpeed *= -5
       }
     }
 

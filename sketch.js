@@ -5,7 +5,7 @@ let columnWidths = [];
 let mic;
 let useCherryBlossom = false
 let micLevel = 0
-let dropThreshold = 0.5
+let dropThreshold = 0.35
 let ballsDropping = false
 let dropTimer = 0
 let dropDuration = 180
