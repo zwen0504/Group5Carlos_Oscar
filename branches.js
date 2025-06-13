@@ -5,7 +5,16 @@ class Circles {
     this.ballXPos = starterXPos
     this.ballYPos = starterYPos
     this.ballDiameter = starterDiameter
+
+    //store original positions for oscillation
+    this.originalX = starterXPos
+    this.originalY = starterYPos
   
+    //for dropping animation
+    this.targetY = height - 80 //base level of drawing
+    this.dropSpeed = 0
+    this.gravity = 0.3
+
     //stored random colors with min/max of browns for trunk
     this.colorTop = colorTop ?? color(random(80, 100), random(50, 70), random(40, 50));
     this.colorBottom = colorBottom ?? color(random(120, 150), random(80, 100), random(50, 80));
@@ -98,8 +107,8 @@ class Circles {
     }
   }
 
+  //display function for stationary ball generation
   display(){  
-
     push()
 
     translate(this.ballXPos, this.ballYPos)
@@ -108,13 +117,71 @@ class Circles {
     strokeWeight(this.StrokeWeight)
 
     fill(this.colorTop)
-    arc(0,0, this.ballDiameter, this.ballDiameter, PI/2, (3*PI)/2, PIE)
+    arc(0,0, this.ballDiameter, this.ballDiameter, PI/2, (3*PI)/2) //calculate semicircle shape
 
     fill(this.colorBottom)
     arc(0,0, this.ballDiameter, this.ballDiameter, (3*PI)/2, PI/2)
 
+    pop()   
+  }
+
+  //display function for miclevel osciallation
+  displayWithOscillation(micLevel){
+    push()
+
+    //calculate oscillation based on mic level input
+    let oscillationX = sin(frameCount * 0.1 + this.originalX * 0.01) * micLevel * 20
+    let oscillationY = cos(frameCount * 0.08 + this.originalY * 0.01) * micLevel * 15
+
+    //Apply oscillation to current position
+    let currentX = this.originalX + oscillationX
+    let currentY = this.originalY + oscillationY
+
+    //apply same display functions
+    translate(currentX, currentY)
+
+    stroke(this.StrokeColor)
+    strokeWeight(this.StrokeWeight)
+
+    fill(this.colorTop)
+    arc(0,0, this.ballDiameter, this.ballDiameter, PI/2, (3*PI)/2, PI)
+
+    fill(this.colorBottom)
+    arc(0,0, this.ballDiameter, this.ballDiameter, (3*PI)/2, PI/2)
 
     pop()
-    
   }
+
+  //Display function for ball dropping for when ballsDropping == true
+  displayDropping(){
+    push()
+    //apply gravity to the dropspeed
+    this.dropSpeed += this.gravity
+
+    if (this.ballYPos < this.targetY){
+      this.ballYPos += this.dropSpeed
+      //random horizontal movement for natural falling feel
+      this.ballXPos += random(-0.5, 0.5)
+
+      //slight bounce when hitting base level
+      if (this.ballYPos >= this.targetY) {
+        this.ballYPos = this.targetY
+        this.dropSpeed += -0.3
+      }
+    }
+
+    //apply same display functions
+    translate(this.ballXPos, this.ballYPos)
+    stroke(this.StrokeColor)
+    strokeWeight(this.StrokeWeight)
+
+    fill(this.colorTop)
+    arc(0,0, this.ballDiameter, this.ballDiameter, PI/2, (3*PI)/2, PI)
+
+    fill(this.colorBottom)
+    arc(0,0, this.ballDiameter, this.ballDiameter, (3*PI)/2, PI/2)
+
+    pop()
+  }
+
 }

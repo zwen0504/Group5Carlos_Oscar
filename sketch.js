@@ -4,23 +4,28 @@ let borderColor;
 let columnWidths = [];
 let mic;
 let useCherryBlossom = false
+let micLevel = 0
+let dropThreshold = 0.3
+let ballsDropping = false
+let dropTimer = 0
+let dropDuration = 180
 
 function preload() {
   img = loadImage('Assets/Anwar Jalal Shemza Apple Tree.jpeg'); 
 }
 
 function setup() {
-  /*let trunk = new Circles(img.width/2, img.height - img.height/5.5, 50)
-  trunk.generateTrunk()
-  trunk.generateBranches()
-  trunk.growBranch()
-  */
-  
   createCanvas(img.width, img.height);
   extractBackgroundPalette();
 
   borderColor = color(152, 182, 180); //Light gray blue border
   generateColumnWidths();
+
+  //initialise mic
+  mic = new p5.AudioIn()
+  mic.start()
+
+  //draw intial scene
   redrawScene()
 }
 
@@ -44,9 +49,43 @@ function generateTree(){
 }
 
 function draw() {
-  for (let ball of balls) {
-    ball.display()
+  //get mic level
+  micLevel = mic.getLevel()
+ console.log(micLevel)
+  //check whether to drop balls or not
+  if (micLevel > dropThreshold && !ballsDropping){
+    ballsDropping = true
+    dropTimer = dropDuration
+  }
+
+  //timer ticks down and switches off balls dropping at 0
+  if (ballsDropping){
+    dropTimer--
+    if (dropTimer <= 0){
+      ballsDropping = false
+      //regen tree after dropping balls
+      regenerateTree()
+      return
     }
+
+  }
+
+  for (let i=0; i<balls.length; i++) {
+    let ball = balls[i]
+
+    //display balls dropping if ballsDropping == true
+    if (ballsDropping) {
+      ball.displayDropping();
+    } else {
+      //else display balls oscillating with miclevel
+      if (i>3){ //i>3 skips trunk
+        ball.displayWithOscillation(micLevel)
+      } else {
+        //else just display normally
+        ball.display()
+      }
+    }
+  }
 }
 
 function regenerateTree() {
