@@ -21,13 +21,18 @@ function setup() {
 
   borderColor = color(152, 182, 180); //Light gray blue border
   generateColumnWidths();
+  redrawScene()
+}
 
+//new function to redraw the scene so new generated trees do not overlay
+function redrawScene(){
   drawBorder();
   drawMosaicBackground();
   addTexture();
   addScratches();
   drawBase()
   generateTree()
+
 }
 
 function generateTree(){
@@ -45,10 +50,7 @@ function draw() {
 }
 
 function regenerateTree() {
-  balls = [];
-  let base = new Circles(width / 2, height - 50, 80);
-  base.generateTrunk();
-  base.generateBranches();
+  redrawScene()
 }
 
 
@@ -56,7 +58,6 @@ function keyPressed() {
   if (key == 'c'){
     useCherryBlossom = !useCherryBlossom;
     regenerateTree()
-
   }
 }
 
@@ -145,11 +146,6 @@ function generateColumnWidths() {
     x += w; //Move coordinate
     remaining -= w; //Update remaining width
   }
-
-    //lets draw the base and trunk to the canvas
-  drawBase();
-  drawTrunk();
-
 }
 
 //Border drawing
