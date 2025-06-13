@@ -37,7 +37,7 @@ function redrawScene(){
   addScratches();
   drawBase()
   generateTree()
-
+ 
 }
 
 function generateTree(){

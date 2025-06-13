@@ -2,7 +2,7 @@
 **Oscar Wen | zwen0504 | Carlos Group 6**
 
 ## Overview
-This project transforms Anwar Jalal Shemza's "Apple Tree" into an interactive digital artwork utilising user input to drive animation. The piece generates a mosaic-style background extracted from the original painting and overlays generated tree shape utilising keyboard and audio input.
+This project transforms Anwar Jalal Shemza's "Apple Tree" into an interactive digital artwork utilising user input to drive animation. The piece generates a mosaic style background extracted from the original painting and overlays generated tree shape utilising keyboard and audio input.
 
 ## Instructions
 ### Setup
@@ -19,7 +19,7 @@ This project transforms Anwar Jalal Shemza's "Apple Tree" into an interactive di
 ## Individual Approach to Animation
 
 ### Animation Driver: Audio Input
-I chose **audio input** as the primary driver for my animation system. This decision was inspired by the organic, living quality I wanted to bring to the static artwork - making it respond to the viewer's presence and voice creates an intimate, interactive experience.
+I chose **user input** as the primary driver for my animation system. This decision was inspired by the organic, living quality I wanted to bring to the static artwork. Through keyboard and mic input, it responds to the viewer's presence and voice. All team members within the group had approaches which animated the branches generation in different ways. For example, modifying seasonal changes, sizing, adding growing effects. My approach was different as I chose to implement a physics based animation style.
 
 ### Animated Properties
 My implementation focuses on animating **position and movement** of the tree elements:
@@ -88,6 +88,20 @@ The falling animation implements realistic physics:
 - **Bounce**: Reduced velocity reversal when hitting ground
 - **Drift**: Slight horizontal randomisation for natural falling patterns
 
+#### Cherry Blossom Toggle
+useCherryBlossom acted a toggle to switch the colours of the branches between a pink palette to the base seasonal palette
+```javascript
+if (useCherryBlossom){
+     seasonColors = [
+      [color(255, 182, 193), color(255, 105, 180)], //pink
+      [color(255, 182, 193), color(255, 105, 180)],
+      [color(255, 182, 193), color(255, 105, 180)],
+      [color(255, 182, 193), color(255, 105, 180)]
+      ];
+      } else {
+      seasonColors...
+```
+
 ### Major Code Modifications
 
 #### Enhanced Ball Class
@@ -105,4 +119,6 @@ Implemented canvas clearing:
 ## File Structure
 - `sketch.js`: Main animation logic, audio processing, and canvas management
 - `branches.js`: Enhanced Circles class with animation methods
-- `trunk_base.js`: Static decorative elements (unchanged from group version)
+- `trunk_base.js`: Same as group version
+- `index.html`: Same as group version
+
