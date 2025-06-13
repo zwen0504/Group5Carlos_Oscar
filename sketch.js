@@ -5,7 +5,7 @@ let columnWidths = [];
 let mic;
 let useCherryBlossom = false
 let micLevel = 0
-let dropThreshold = 0.3
+let dropThreshold = 0.5
 let ballsDropping = false
 let dropTimer = 0
 let dropDuration = 180
@@ -51,7 +51,7 @@ function generateTree(){
 function draw() {
   //get mic level
   micLevel = mic.getLevel()
- console.log(micLevel)
+  console.log(micLevel)
   //check whether to drop balls or not
   if (micLevel > dropThreshold && !ballsDropping){
     ballsDropping = true
@@ -68,6 +68,12 @@ function draw() {
       return
     }
 
+    //redraw background scene while balls drop to clear prev ball positions
+    drawBorder();
+    drawMosaicBackground();
+    addTexture();
+    addScratches();
+    drawBase()
   }
 
   for (let i=0; i<balls.length; i++) {
@@ -75,7 +81,11 @@ function draw() {
 
     //display balls dropping if ballsDropping == true
     if (ballsDropping) {
+      if (i>3){ //i>3 skips trunk
       ball.displayDropping();
+    } else {
+      ball.display()
+    } 
     } else {
       //else display balls oscillating with miclevel
       if (i>3){ //i>3 skips trunk
@@ -87,6 +97,8 @@ function draw() {
     }
   }
 }
+
+
 
 function regenerateTree() {
   redrawScene()
@@ -256,7 +268,6 @@ function addScratches() {
     line(x1, y1, x2, y2);
   }
 }
-
 
 /* 
 function keyPressed() {

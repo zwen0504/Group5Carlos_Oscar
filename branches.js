@@ -130,8 +130,8 @@ class Circles {
     push()
 
     //calculate oscillation based on mic level input
-    let oscillationX = sin(frameCount * 0.1 + this.originalX * 0.01) * micLevel * 20
-    let oscillationY = cos(frameCount * 0.08 + this.originalY * 0.01) * micLevel * 15
+    let oscillationX = sin(frameCount * 0.1 + this.originalX * 0.1) * micLevel * 20
+    let oscillationY = cos(frameCount * 0.08 + this.originalY * 0.1) * micLevel * 15
 
     //Apply oscillation to current position
     let currentX = this.originalX + oscillationX
@@ -161,12 +161,12 @@ class Circles {
     if (this.ballYPos < this.targetY){
       this.ballYPos += this.dropSpeed
       //random horizontal movement for natural falling feel
-      this.ballXPos += random(-0.5, 0.5)
+      this.ballXPos += random(-5, 5)
 
       //slight bounce when hitting base level
       if (this.ballYPos >= this.targetY) {
         this.ballYPos = this.targetY
-        this.dropSpeed += -0.3
+        this.dropSpeed *= -0.3
       }
     }
 
